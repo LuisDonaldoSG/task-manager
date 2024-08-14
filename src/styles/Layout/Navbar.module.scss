@@ -1,0 +1,21 @@
+@import '@styles/variables.scss';
+
+.navbar {
+    grid-area: navbar;
+    height: $height-navbar;
+    padding: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    .user-icon{
+        font-size: 30px;
+    }
+
+    .title-page {
+        font-size: 28px;
+        font-weight: bold;
+        color: #4c4c4c;
+        font-weight: bold;
+    }
+}

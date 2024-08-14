@@ -1,0 +1,42 @@
+@import '@styles/variables.scss';
+
+.main {
+    padding: 16px;
+    border-radius: $border-radius;
+    background-color: $primary-background-color;
+    max-width: 600px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    position: relative;
+
+    .complete-icon{
+        fill: #33cc33;
+        position: absolute;
+        top: -7px;
+        right: -7px;
+    }
+
+    .title-and-value{
+        display: flex;
+        flex-direction: column;
+
+        .title{
+            font-size: 14px;
+            font-weight: 500;
+            color: $light-font-color;
+        }
+
+        .value{
+            font-size: 16px;
+            font-weight: 500;
+        }
+
+    }
+
+    .buttons-container{
+        display: flex;
+        gap: 10px;
+        justify-content: flex-end;
+    }
+}

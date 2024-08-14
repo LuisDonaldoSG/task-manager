@@ -1,0 +1,91 @@
+@import '@styles/variables.scss';
+
+.main {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+
+    .titles-container {
+        display: flex;
+        gap: $border-radius;
+        align-items: center;
+
+        .title {
+            font-size: 20px;
+            font-weight: 500;
+        }
+
+        .subtitle {
+            font-size: 14px;
+            color: $light-font-color;
+        }
+    }
+
+    .filters-container {
+        display: flex;
+        justify-content: flex-end;
+    }
+
+    .table-container {
+        width: 100%;
+        border-radius: $border-radius;
+        padding: 16px;
+        background-color: $primary-background-color;
+
+        .empty-data-container{
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            align-items: center;
+
+            .title{
+                font-size: 20px;
+            }
+
+            .add-task-icon{
+                font-size: 60px;
+            }
+        }
+
+        table {
+            border-spacing: 0px 10px;
+            width: 100%;
+
+            thead {
+                tr {
+                    th {
+                        padding: 9px 12px;
+                        text-align: left;
+                    }
+                }
+            }
+            
+            tbody {
+                tr {
+                    background-color: white;
+                    box-shadow: $box-shadow;
+                    border-radius: $border-radius;
+                    overflow: hidden;
+                    
+                    td {
+                        padding: 9px 12px;
+
+                        &:first-child{
+                            border-top-left-radius: $border-radius;
+                            border-bottom-left-radius: $border-radius;
+                        }
+
+                        &:last-child{
+                            border-top-right-radius: $border-radius;
+                            border-bottom-right-radius: $border-radius;
+                        }
+
+                        .icon-completed{
+                            fill: #33cc33;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

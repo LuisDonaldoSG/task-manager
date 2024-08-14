@@ -1,0 +1,19 @@
+@import '@styles/variables.scss';
+
+.form-container{
+    max-width: 800px;
+    margin-top: 16px;
+    background-color: $primary-background-color;
+    border-radius: $border-radius;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+
+    .buttons-container{
+        margin-top: 20px;
+        display: flex;
+        gap: 10px;
+        justify-content: flex-end;
+    }
+}

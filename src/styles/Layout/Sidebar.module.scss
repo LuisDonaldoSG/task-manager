@@ -1,0 +1,25 @@
+@import '@styles/variables.scss';
+
+.sidebar{
+    grid-area: sidebar;
+    margin: 7px;
+    background: $primary-gradient;
+    width: $width-side-bar;
+    padding: 16px;
+    border-radius: $border-radius;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+
+    .title{
+        color: white;
+        font-size: 24px;
+        font-weight: 400;
+    }
+
+    .links-container{
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+}
