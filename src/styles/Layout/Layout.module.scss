@@ -11,7 +11,7 @@
         'sidebar main'
         'sidebar main'
     ;
-    background: linear-gradient(180deg, rgba(209, 213, 221, 0.8) 0%, rgba(242, 242, 243, 0.9) 100%); 
+    background: linear-gradient(180deg, rgba(209, 213, 221, 0.8) 0%, rgba(242, 242, 243, 0.9) 100%);
 
     .main {
         height: calc(100vh - $height-navbar - 30px);
@@ -19,5 +19,29 @@
         overflow: auto;
         padding: 16px;
         margin-bottom: 30px;
+    }
+}
+
+@media (max-width: $breakpoint-md) {
+    .layout {
+        grid-template-areas:
+            'navbar navbar'
+            'main main'
+            'main main'
+            'main main'
+        ;
+    }
+
+    .layout[data-sidebar-open-in-mobile=true] {
+        &::after{
+            content: ' ';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(55, 55, 55, 0.463);
+            z-index: 2;
+        }
     }
 }

@@ -1,6 +1,6 @@
 @import '@styles/variables.scss';
 
-.sidebar{
+.sidebar {
     grid-area: sidebar;
     margin: 7px;
     background: $primary-gradient;
@@ -10,16 +10,47 @@
     display: flex;
     flex-direction: column;
     gap: 30px;
+    transition: all ease 0.3s;
 
-    .title{
+    .title {
         color: white;
         font-size: 24px;
         font-weight: 400;
     }
 
-    .links-container{
+    .links-container {
         display: flex;
         flex-direction: column;
         gap: 10px;
+    }
+
+    .close-modal-in-mobile-button{
+        display: none;
+        
+        .close-icon{
+            fill: white
+        }
+    }
+}
+
+@media (max-width: $breakpoint-md) {
+    .sidebar {
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        z-index: 3;
+        transform: translateX( - calc($width-side-bar + 7px));
+    }
+
+    .sidebar[data-open-in-mobile=true]{
+        transform: translateX(0px);
+
+        .close-modal-in-mobile-button{
+            display: block;
+            position: absolute;
+            right: -40px;
+            top: 0;
+        }
     }
 }

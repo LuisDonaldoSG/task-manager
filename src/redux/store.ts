@@ -1,5 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
 import taskReducer from '@reducers/task.reducer';
+import layoutReducer from '@reducers/layout.reducer';
 
 export const store = configureStore({
     middleware: getDefaultMiddleware =>
@@ -7,7 +8,8 @@ export const store = configureStore({
             serializableCheck: false,
         }),
     reducer: {
-        taskReducer
+        taskReducer,
+        layoutReducer
     }
 });
 

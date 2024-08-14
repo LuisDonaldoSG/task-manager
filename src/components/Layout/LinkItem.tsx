@@ -4,11 +4,14 @@ import styles from '@styles/Layout/LinkItem.module.scss';
 import { useMemo, useState } from "react";
 import { LinkItemI } from "@interfaces/props";
 import { Divider } from "@mui/material";
+import { useAppDispatch } from "@redux/hooks";
+import { setOpenSideBarInMobile } from "@reducers/layout.reducer";
 
 export default function LinkItem({ dataLink, nameForSubPath }: LinkItemI) {
 
     const pathname = usePathname();
     const [openSubPaths, setOpenSubPaths] = useState<boolean>(false);
+    const dispatch = useAppDispatch()
 
     useMemo(() => {
         if (openSubPaths && Array.isArray(dataLink.pathData) && dataLink.pathData.some(data => data.route !== pathname)) {
@@ -39,6 +42,7 @@ export default function LinkItem({ dataLink, nameForSubPath }: LinkItemI) {
                     {
                         dataLink.pathData.map((data, index) => (
                             <Link
+                                onClick={() => dispatch(setOpenSideBarInMobile(false))}
                                 key={index}
                                 href={data.route}
                                 className={styles.subpath}
@@ -49,6 +53,7 @@ export default function LinkItem({ dataLink, nameForSubPath }: LinkItemI) {
                         ))
                     }
                 </div> : <Link
+                    onClick={() => dispatch(setOpenSideBarInMobile(false))}
                     className={styles.item}
                     href={dataLink.pathData.route}
                     data-selected={pathname === dataLink.pathData.route}
@@ -57,7 +62,7 @@ export default function LinkItem({ dataLink, nameForSubPath }: LinkItemI) {
                     <dataLink.icon fontSize="small" />
                 </Link>
             }
-            <Divider className="dark"/>
+            <Divider className="dark" />
         </>
 
     );

@@ -48,6 +48,9 @@
             "@redux/*": [
                 "redux/*"
             ],
+            "@providers/*": [
+                "providers/*"
+            ],
         }
     },
     "include": [

@@ -22,3 +22,7 @@ export interface TaskDetailsI {
     task: TaskI
     onEdit: () => void
 }
+
+export interface LocalStorageProviderI{
+    children: ReactNode
+}
