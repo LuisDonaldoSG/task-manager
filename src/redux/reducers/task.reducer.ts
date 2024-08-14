@@ -32,12 +32,17 @@ const taskSlice = createSlice({
                 }
             });
             localStorage.setItem('tasks', JSON.stringify(tempTasks));
+        },
+        deleteTask(state, action: PayloadAction<string>) {
+            const tempTasks: TaskI[] = [...state.tasks]
+            state.tasks = tempTasks.filter(task => task.id !== action.payload)
         }
     }
 });
 
 export const {
     editTask,
-    createTask
+    createTask,
+    deleteTask
 } = taskSlice.actions;
 export default taskSlice.reducer;

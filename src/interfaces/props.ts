@@ -17,3 +17,8 @@ export interface TaskFormI {
     onCancel?: () => void
     onSubmit?: () => void
 }
+
+export interface TaskDetailsI {
+    task: TaskI
+    onEdit: () => void
+}
