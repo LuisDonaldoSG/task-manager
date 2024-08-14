@@ -25,12 +25,13 @@ export default function Sidebar() {
                     ))
                 }
             </div>
-            <IconButton 
-                onClick={() => dispatch(setOpenSideBarInMobile(false))}
-                className={styles['close-modal-in-mobile-button']}
-            >
-                <CloseIcon className={styles['close-icon']} />
-            </IconButton>
+            <div className={styles['close-modal-in-mobile-button']}>
+                <IconButton 
+                    onClick={() => dispatch(setOpenSideBarInMobile(false))}
+                >
+                    <CloseIcon className={styles['close-icon']} />
+                </IconButton>
+            </div>
         </aside>
     );
 }

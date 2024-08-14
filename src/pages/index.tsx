@@ -59,22 +59,22 @@ export default function Home() {
                             {
                                 tasks.map(task => (
                                     <tr key={task.id}>
-                                        <td>{task.title}</td>
-                                        <td className={styles.description}>{task.description}</td>
-                                        <td>
+                                        <td data-title={'Title'}>{task.title}</td>
+                                        <td className={styles.description} data-title={'Description'}>{task.description}</td>
+                                        <td data-title={'Priority'}>
                                             <Chip
                                                 label={task.priority}
                                                 size='small'
                                                 color={chipsColorsByPriority[task.priority]}
                                             />
                                         </td>
-                                        <td>{dayjs(task.dateTime).format('DD/MM/YYYY - hh:mm a')}</td>
+                                        <td data-title={'Date time'}>{dayjs(task.dateTime).format('DD/MM/YYYY - hh:mm a')}</td>
                                         <td>
                                             <IconButton onClick={() => router.push(`${TASK_PATH}/${task.id}`)}>
                                                 <VisibilityIcon />
                                             </IconButton>
                                         </td>
-                                        <td>
+                                        <td className={styles['complete-container']}>
                                             {
                                                 task.completed && <TaskAltIcon
                                                     className={styles['icon-completed']}

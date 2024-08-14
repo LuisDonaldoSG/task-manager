@@ -23,7 +23,6 @@ const taskSlice = createSlice({
                 id: nanoid()
             });
             state.tasks = tempTasks;
-            localStorage.setItem('tasks', JSON.stringify(tempTasks));
         },
         editTask(state, action: PayloadAction<{ id: string, taskData: TaskI }>) {
             const tempTasks: TaskI[] = [...state.tasks];
@@ -34,12 +33,10 @@ const taskSlice = createSlice({
                     return task;
                 }
             });
-            localStorage.setItem('tasks', JSON.stringify(tempTasks));
         },
         deleteTask(state, action: PayloadAction<string>) {
             const tempTasks: TaskI[] = [...state.tasks]
             state.tasks = tempTasks.filter(task => task.id !== action.payload)
-            localStorage.setItem('tasks', JSON.stringify(tempTasks.filter(task => task.id !== action.payload)));
         }
     }
 });
