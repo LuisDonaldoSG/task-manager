@@ -14,3 +14,5 @@ export interface TaskI {
 }
 
 export type Priority = 'low' | 'high' | 'medium'
+
+export type OrderTask = 'asc' | 'desc' | 'default'

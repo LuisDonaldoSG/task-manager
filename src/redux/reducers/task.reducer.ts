@@ -22,21 +22,26 @@ const taskSlice = createSlice({
                 dateTime: dayjs(),
                 id: nanoid()
             });
+            localStorage.setItem('tasks', JSON.stringify(tempTasks))
             state.tasks = tempTasks;
         },
         editTask(state, action: PayloadAction<{ id: string, taskData: TaskI }>) {
-            const tempTasks: TaskI[] = [...state.tasks];
-            state.tasks = tempTasks.map(task => {
+            let tempTasks: TaskI[] = [...state.tasks];
+            tempTasks = tempTasks.map(task => {
                 if (task.id === action.payload.id) {
                     return action.payload.taskData;
                 } else {
                     return task;
                 }
             });
+            state.tasks = tempTasks
+            localStorage.setItem('tasks', JSON.stringify(tempTasks))
         },
         deleteTask(state, action: PayloadAction<string>) {
-            const tempTasks: TaskI[] = [...state.tasks]
-            state.tasks = tempTasks.filter(task => task.id !== action.payload)
+            let tempTasks: TaskI[] = [...state.tasks]
+            tempTasks = tempTasks.filter(task => task.id !== action.payload)
+            state.tasks = tempTasks
+            localStorage.setItem('tasks', JSON.stringify(tempTasks))
         }
     }
 });

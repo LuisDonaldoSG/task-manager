@@ -26,3 +26,7 @@ export interface TaskDetailsI {
 export interface LocalStorageProviderI{
     children: ReactNode
 }
+
+export interface TaskListI {
+    tasks: TaskI[]
+}

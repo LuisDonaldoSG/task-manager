@@ -1,21 +1,52 @@
-import { Button, Chip, IconButton } from '@mui/material';
+import { Button, Chip, MenuItem, TextField } from '@mui/material';
 import styles from '@styles/Home.module.scss';
-import VisibilityIcon from '@mui/icons-material/Visibility';
 import { useAppSelector } from '@redux/hooks';
-import dayjs from 'dayjs';
-import TaskAltIcon from '@mui/icons-material/TaskAlt';
-import PlaylistAddIcon from '@mui/icons-material/PlaylistAdd';
 import { useRouter } from 'next/router';
-import { CRATE_TASK_PATH, TASK_PATH } from '@utils/paths';
-import { useMemo } from 'react';
-import { TaskI } from '@interfaces/task';
-import { chipsColorsByPriority } from '@utils/staticData';
+import { CRATE_TASK_PATH } from '@utils/paths';
+import { useEffect, useMemo, useState } from 'react';
+import { OrderTask, Priority, TaskI } from '@interfaces/task';
+import TaskList from '@components/task/TaskList';
+import dayjs from 'dayjs';
 
 export default function Home() {
 
     const tasks = useAppSelector(state => state.taskReducer.tasks);
     const router = useRouter();
     const completedTasks = useMemo<TaskI[]>(() => tasks.filter(task => task.completed), [tasks]);
+    const [order, setOrder] = useState<OrderTask>('default')
+    const [priority, setPriority] = useState<Priority | null>(null)
+    const [tasksForFiler, setTasksForFiler] = useState<TaskI[]>([])
+
+    useEffect(() => {
+        setTasksForFiler(tasks)
+    }, [tasks])
+
+    const handleFilterPriority = (priorityParam: Priority | null) => {
+        setPriority(priorityParam)
+        setOrder('default')
+        let tempTaskForFilter = [...tasks]
+        if (priorityParam) {
+            tempTaskForFilter = tempTaskForFilter.filter(task => task.priority === priorityParam)
+        } else {
+            tempTaskForFilter = [...tasks]
+        }
+        setTasksForFiler(tempTaskForFilter)
+    }
+
+    const handleOrder = (order: OrderTask) => {
+        setOrder(order)
+        let tempTaskForFilter = [...tasksForFiler]
+        if (order === 'default') {
+            tempTaskForFilter = priority !== null ? [...tasks].filter(task => task.priority === priority) : [...tasks]
+        }
+        if (order === 'asc') {
+            tempTaskForFilter.sort((taskA, taskB) => dayjs(taskB.dateTime).unix() - dayjs(taskA.dateTime).unix())
+        }
+        if (order === 'desc') {
+            tempTaskForFilter.sort((taskA, taskB) => dayjs(taskA.dateTime).unix() - dayjs(taskB.dateTime).unix())
+        }
+        setTasksForFiler(tempTaskForFilter)
+    }
 
     return (
         <main className={styles.main}>
@@ -26,6 +57,47 @@ export default function Home() {
                 }
             </article>
             <div className={styles['filters-container']}>
+                <div className={styles.filters}>
+                    <div className={styles['chips']}>
+                        <span>Filter: </span>
+                        <Chip
+                            label='High'
+                            color='error'
+                            size={'small'}
+                            className={styles.chip}
+                            data-selected={priority === 'high'}
+                            onClick={() => handleFilterPriority(priority === 'high' ? null : 'high')}
+                        />
+                        <Chip
+                            label='Medium'
+                            color='warning'
+                            size='small'
+                            className={styles.chip}
+                            data-selected={priority === 'medium'}
+                            onClick={() => handleFilterPriority(priority === 'medium' ? null : 'medium')}
+                        />
+                        <Chip
+                            label='Low'
+                            color='success'
+                            size='small'
+                            className={styles.chip}
+                            data-selected={priority === 'low'}
+                            onClick={() => handleFilterPriority(priority === 'low' ? null : 'low')}
+                        />
+                    </div>
+                    <span>Order: </span>
+                    <TextField
+                        select
+                        value={order}
+                        size='small'
+                        onChange={event => handleOrder(event.target.value as OrderTask)}
+                        variant='standard'
+                    >
+                        <MenuItem value={'default'}>Default</MenuItem>
+                        <MenuItem value={'desc'}>Desc</MenuItem>
+                        <MenuItem value={'asc'}>Asc</MenuItem>
+                    </TextField>
+                </div>
                 <Button
                     variant='contained'
                     onClick={() => router.push(CRATE_TASK_PATH)}
@@ -33,61 +105,7 @@ export default function Home() {
                     Add task
                 </Button>
             </div>
-            <div className={styles['table-container']}>
-                {
-                    tasks.length === 0 ? <div className={styles['empty-data-container']}>
-                        <IconButton
-                            onClick={() => router.push(CRATE_TASK_PATH)}
-                        >
-                            <PlaylistAddIcon
-                                className={styles['add-task-icon']}
-                            />
-                        </IconButton>
-                        <span className={styles.title}>No tasks</span>
-                    </div> : <table>
-                        <thead>
-                            <tr>
-                                <th>Title</th>
-                                <th>Description</th>
-                                <th>Priority</th>
-                                <th>Date time</th>
-                                <th></th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {
-                                tasks.map(task => (
-                                    <tr key={task.id}>
-                                        <td data-title={'Title'}>{task.title}</td>
-                                        <td className={styles.description} data-title={'Description'}>{task.description}</td>
-                                        <td data-title={'Priority'}>
-                                            <Chip
-                                                label={task.priority}
-                                                size='small'
-                                                color={chipsColorsByPriority[task.priority]}
-                                            />
-                                        </td>
-                                        <td data-title={'Date time'}>{dayjs(task.dateTime).format('DD/MM/YYYY - hh:mm a')}</td>
-                                        <td>
-                                            <IconButton onClick={() => router.push(`${TASK_PATH}/${task.id}`)}>
-                                                <VisibilityIcon />
-                                            </IconButton>
-                                        </td>
-                                        <td className={styles['complete-container']}>
-                                            {
-                                                task.completed && <TaskAltIcon
-                                                    className={styles['icon-completed']}
-                                                />
-                                            }
-                                        </td>
-                                    </tr>
-                                ))
-                            }
-                        </tbody>
-                    </table>
-                }
-            </div>
+            <TaskList tasks={tasksForFiler} />
         </main>
     );
 }
