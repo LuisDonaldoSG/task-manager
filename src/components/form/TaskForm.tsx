@@ -41,6 +41,7 @@ export default function TaskForm({
     return (
         <form className={styles['form-container']} onSubmit={handleSubmit(submit)}>
             <TextField
+                aria-label="Title"
                 label='Title'
                 variant='standard'
                 fullWidth
@@ -49,6 +50,7 @@ export default function TaskForm({
                 {...register(`title`, { required: 'Required field' })}
             />
             <TextField
+                aria-label="Description"
                 label='Description'
                 multiline
                 rows={3}
@@ -63,6 +65,7 @@ export default function TaskForm({
                 rules={{ required: 'Required field' }}
                 render={({ field: { name, onChange, ref, value } }) => (
                     <TextField
+                        aria-label="Priority"
                         label='Priority'
                         select
                         name={name}
@@ -87,6 +90,7 @@ export default function TaskForm({
                         name="completed"
                         render={({ field: { value, onChange } }) => (
                             <Switch
+                                aria-label="Completed"
                                 checked={value}
                                 onChange={(_event, checked) => onChange(checked)}
                             />

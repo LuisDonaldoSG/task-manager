@@ -88,6 +88,7 @@ export default function Home() {
                     <span>Order: </span>
                     <TextField
                         select
+                        aria-label='Order'
                         value={order}
                         size='small'
                         onChange={event => handleOrder(event.target.value as OrderTask)}
